@@ -107,6 +107,11 @@ main {
     color:gold;
 }
 
+.dropdown-menu1 a:hover {
+    color: #183B2B;
+    background-color: gold;
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 7px;
