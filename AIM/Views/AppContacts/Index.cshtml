@@ -1,0 +1,59 @@
+﻿@model IEnumerable<AIM.Models.AppContact>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            
+            <th>
+                Support Type
+            </th>
+
+            <th>
+                Contact Number
+            </th>
+            <th>
+                Created By
+            </th>
+            <th>
+                Created Date
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+              
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.SupportType.SupportTypeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserFullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDt)
+                </td>
+                <td>
+                    
+                    @Html.ActionLink("Delete", "Delete", new { id = $"{item.AppCode}-{item.ContactNo}-{item.SupportTypeCode}" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,183 @@
+﻿@model AIM.Models.Application
+@{
+    ViewData["Title"] = "Create";
+}
+<h1>Create</h1>
+<h4>Application</h4>
+<hr />
+<div class="row">
+    <div class="col-md-10 mx-start d-flex">
+        <form asp-action="Create" class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" hidden>
+                <label asp-for="AppCode" class="control-label"></label>
+                <input asp-for="AppCode" class="form-control" value="sample" />
+                <span asp-validation-for="AppCode" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="AppName" class="col-md-6 col-form-label">Application Name</label>
+                    <div class="col-md-6">
+                        <input asp-for="AppName" class="form-control" />
+                        <span asp-validation-for="AppName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="AppCategory" class="col-md-6 col-form-label">Application Category</label>
+                    <div class="col-md-6">
+                        <select asp-for="AppCategory" class="form-control" asp-items="ViewBag.AppCategory"></select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="AppCritLevel" class="col-md-6 col-form-label">Critical Level</label>
+                    <div class="col-md-6">
+                        <select asp-for="AppCritLevel" class="form-control" asp-items="ViewBag.AppCritLevel"></select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="AppSLALevel" class="col-md-6 col-form-label">SLA Level</label>
+                    <div class="col-md-6">
+                        <select asp-for="AppSLALevel" class="form-control" asp-items="ViewBag.AppSLALevel"></select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="AppVersion" class="col-md-6 col-form-label">Application Version</label>
+                    <div class="col-md-6">
+                        <input asp-for="AppVersion" class="form-control" />
+                        <span asp-validation-for="AppVersion" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="AppLocation" class="col-md-6 col-form-label">Application Location</label>
+                    <div class="col-md-6">
+                        <select asp-for="AppLocation" class="form-control" asp-items="ViewBag.AppLocation"></select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="AppDescription" class="col-md-6 col-form-label">Application Description</label>
+                    <div class="col-md-6">
+                        <input asp-for="AppDescription" class="form-control" />
+                        <span asp-validation-for="AppDescription" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="AppServerName" class="col-md-6 col-form-label">Server</label>
+                    <div class="col-md-6">
+                        <select asp-for="AppServerName" class="form-control" asp-items="ViewBag.AppServerName"></select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="AppOS" class="col-md-6 col-form-label">Operating System</label>
+                    <div class="col-md-6">
+                        <select asp-for="AppOS" class="form-control" asp-items="ViewBag.AppOS"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="AppProgramApiEndpoint" class="col-md-6 col-form-label">Application Program Endpoint</label>
+                    <div class="col-md-6">
+                        <input asp-for="AppProgramApiEndpoint" class="form-control" />
+                        <span asp-validation-for="AppProgramApiEndpoint" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="AppApiUrlEndpoint" class="col-md-6 col-form-label">API URL Endpoint</label>
+                    <div class="col-md-6">
+                        <input asp-for="AppApiUrlEndpoint" class="form-control" />
+                        <span asp-validation-for="AppApiUrlEndpoint" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="AppPortUsed" class="col-md-6 col-form-label">Application Port Used</label>
+                    <div class="col-md-6">
+                        <input asp-for="AppPortUsed" class="form-control" />
+                        <span asp-validation-for="AppPortUsed" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="AppSupportsSD" class="col-md-6 col-form-label">Application Support</label>
+                    <div class="col-md-6">
+                        <input asp-for="AppSupportsSD" class="form-control" />
+                        <span asp-validation-for="AppSupportsSD" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="AppAuthMethod" class="col-md-6 col-form-label">Authentication Method</label>
+                    <div class="col-md-6">
+                        <select asp-for="AppAuthMethod" class="form-control" asp-items="ViewBag.AppAuthMethod"></select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="AppPrintSpool" class="col-md-6 col-form-label">Print Spooler</label>
+                    <div class="col-md-6">
+                        <select asp-for="AppPrintSpool" class="form-control" asp-items="ViewBag.AppPrintSpool"></select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="AppGroupName" class="col-md-6 col-form-label">Group</label>
+                    <div class="col-md-6">
+                        <select asp-for="AppGroupName" class="form-control" asp-items="ViewBag.AppGroupName"></select>
+                    </div>
+                </div>
+                <div class="form-group row" hidden>
+                    <label for="AppSystemClass" class="col-md-6 col-form-label">System Class</label>
+                    <div class="col-md-6">
+                        <select asp-for="AppSystemClass" class="form-control" asp-items="ViewBag.AppSystemClass"></select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="AppStatus" class="col-md-6 col-form-label">Status</label>
+                    <div class="col-md-6">
+                        <select asp-for="AppStatus" class="form-control" asp-items="ViewBag.AppStatus"></select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="subscriptionType_code" class="col-md-6 col-form-label">Subscription Type</label>
+                    <div class="col-md-6">
+                        <select asp-for="subscriptionType_code" class="form-control" asp-items="ViewBag.SubscriptionType"></select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="AppExpiryDate" class="col-md-6 col-form-label">Expiry Date</label>
+                    <div class="col-md-6">
+                        <input asp-for="AppExpiryDate" class="form-control" />
+                    </div>
+                    <span asp-validation-for="AppExpiryDate" class="text-danger"></span>
+                </div>
+
+            </div>
+      
+            <div class="form-group" hidden>
+                <label asp-for="AppCreatedBy" class="control-label"></label>
+                <select asp-for="AppCreatedBy" class="form-control" asp-items="ViewBag.AppCreatedBy"></select>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="AppCreatedDt" class="control-label"></label>
+                <input asp-for="AppCreatedDt" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+                <span asp-validation-for="AppCreatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="AppUpdatedBy" class="control-label"></label>
+                <select asp-for="AppUpdatedBy" class="form-control" asp-items="ViewBag.AppUpdatedBy"></select>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="AppUpdatedDt" class="control-label"></label>
+                <input asp-for="AppUpdatedDt" class="form-control" />
+                <span asp-validation-for="AppUpdatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group d-flex gap-3 align-items-baseline">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary text-white">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

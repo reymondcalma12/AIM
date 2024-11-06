@@ -1,0 +1,56 @@
+﻿@model IEnumerable<AIM.Models.User>
+
+@{
+    ViewData["Title"] = "Index"; Layout = null;
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+
+          
+            <th>
+                Name
+            </th>
+           
+            <th>
+                Profile
+            </th>
+            <th>Created By</th>
+            <th>Date Created</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+               
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.UserFullName)
+            </td>
+   
+            <td>
+                @Html.DisplayFor(modelItem => item.Profile.ProfileName)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserDtCreated)
+                </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.UserCode">Edit</a> |
+                    <a asp-action="ResetPassword" asp-route-id="@item.UserCode"><i class="fas fa-undo " color="black"></i> Reset</a>
+                <a asp-action="Details" asp-route-id="@item.UserCode">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.UserCode">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

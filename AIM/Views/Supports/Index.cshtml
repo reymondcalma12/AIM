@@ -1,0 +1,60 @@
+﻿@model IEnumerable<AIM.Models.Support>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+               Status
+            </th>
+
+            <th>
+              Created By
+            </th>
+            <th>
+                Date Created
+            </th>
+         
+
+        
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status.StatusName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedBy.UserFullName)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportCreatedDt)
+            </td>
+         
+         
+         
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SupportCode">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SupportCode">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SupportCode">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

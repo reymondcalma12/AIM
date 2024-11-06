@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+
+}
+
+
+
+
+
+
+
+
+<div style="margin-top: 20px;">
+    @if (ViewBag.applicationsExpiringSoon != null && ((List<AIM.Models.Application>)ViewBag.applicationsExpiringSoon).Count > 0)
+    {
+        <div class="card" style="border: 1px solid #ccc; background-color: #F8F9FA; margin-bottom: 20px;">
+            <div class="card-body">
+                <h3 class="card-title" style="color: #333; font-size: 1.5em; margin-bottom: 20px;">Applications Expiring Soon:</h3>
+                <ul class="list-group list-group-flush" style="padding: 0;">
+                    @foreach (var app in (List<AIM.Models.Application>)ViewBag.applicationsExpiringSoon)
+                    {
+                        DateTime currentDate = DateTime.Now;
+                        DateTime expiryDate = app.AppExpiryDate ?? currentDate;
+
+                        var timeLeft = expiryDate > currentDate ? expiryDate - currentDate : TimeSpan.Zero;
+                        var monthsLeft = (int)(timeLeft.TotalDays / 30);
+                        var daysLeft = timeLeft.Days;
+                        <a asp-action="Details" asp-controller="Applications" asp-route-id="@app.AppCode">
+                            <span style="display:none">See Application Details</span>
+                        <li class="list-group-item" style="font-size: 1.2em; padding: 15px; border: 1px solid #D1D1D1; margin-bottom: 10px; border-radius: 5px;">
+                            <span style="font-weight: bold; color: #000;">@app.AppName</span> -
+                            Expires on: <span style="color: #000;">@(app.AppExpiryDate.HasValue ? app.AppExpiryDate.Value.ToString("MMMM dd, yyyy") : "N/A")</span>
+                            <br />
+                            @if (expiryDate < currentDate)
+                            {
+                                <span style="color: #DC3545; font-weight: bold;">Expired</span>
+                            }
+                            else if (monthsLeft > 0)
+                            {
+                                <span style="color: #FFC107; font-style: italic;">@monthsLeft months left</span>
+                            }
+                            else
+                            {
+                                <span style="color: #28A745; font-style: italic;">@daysLeft days left</span>
+                            }
+                        </li>
+                        </a>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+
+    @if (ViewBag.expiredApplications != null && ((List<AIM.Models.Application>)ViewBag.expiredApplications).Count > 0)
+    {
+        <div class="card" style="border: 1px solid #ccc; background-color: #F8F9FA;">
+            <div class="card-body">
+                <h3 class="card-title" style="color: #333; font-size: 1.5em; margin-bottom: 20px;">Expired Applications:</h3>
+                <ul class="list-group list-group-flush" style="padding: 0;">
+                    @foreach (var expiredApp in (List<AIM.Models.Application>)ViewBag.expiredApplications)
+                    {
+                        <li class="list-group-item" style="font-size: 1.2em; padding: 15px; border: 1px solid #D1D1D1; margin-bottom: 10px; border-radius: 5px;">
+                             <span style="font-weight: bold; color: #000;">@expiredApp.AppName</span>  -
+                            Expired on: <span style="color: #DC3545;">@(expiredApp.AppExpiryDate.HasValue ? expiredApp.AppExpiryDate.Value.ToString("MMMM dd, yyyy") : "N/A")</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+
+    @if (ViewBag.applicationsExpiringSoon == null && ((List<AIM.Models.Application>)ViewBag.expiredApplications).Count == 0)
+    {
+        <div class="card" style="border: 1px solid #ccc; background-color: #F8F9FA;">
+            <div class="card-body">
+                <p class="card-text" style="font-size: 1.2em; color: #6C757D;">No applications to display.</p>
+            </div>
+        </div>
+    }
+</div>
+

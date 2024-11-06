@@ -1,0 +1,685 @@
+﻿
+
+@{
+    //var userName = Context.Session.GetString("UserName");
+    //var fullName = Context.Session.GetString("FullName");
+    //var Profile = Context.Session.GetString("ProfileId");
+    var userCode = Context.Session.GetString("UserName");
+    var fullname = Context.Session.GetString("FullName");
+
+}
+<style>
+  </style>
+
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark"> 
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AIM</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AIM.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="~/lib/fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="~/lib/jquery-ui/dist/themes/black-tie/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/lib/jquery-ui/dist/themes/black-tie/theme.css" rel="stylesheet" />
+    <link href="~/lib/datatables.net-bs5/css/datatables.bootstrap5.min.css" rel="stylesheet" />
+
+
+   
+   
+</head>
+<body>
+    @{
+        int soonToExpireCount = ViewBag.applicationsExpiringSoon != null
+        ? ((List<AIM.Models.Application>)ViewBag.applicationsExpiringSoon)
+        .Count(app => (app.AppExpiryDate ?? DateTime.Now) < DateTime.Now.AddMonths(1))
+        : 0;
+
+        bool showNotification = soonToExpireCount > 0;
+    }
+
+    @if (showNotification)
+    {
+       // Calculate the count of expiring applications
+    var expiringApplicationsCount = ViewBag.applicationsExpiringSoon != null
+        ? ((List<AIM.Models.Application>)ViewBag.applicationsExpiringSoon)
+            .Count(app => (app.AppExpiryDate ?? DateTime.Now) < DateTime.Now.AddMonths(1))
+        : 0;
+
+
+            <div class="nav-item text-white text-uppercase dropdown" style="position: fixed; top: 0px; right: 25px; cursor: pointer; z-index: 100;">
+                <a class=" text-decoration-none text-dark nav-link d-flex align-items-center" role="button" aria-haspopup="true" aria-expanded="false">
+                    <div class="rounded-circle text-center d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px; background-color: #101010; font-size: 18px; font-weight: bold; color: white;">
+                        @ViewBag.fullname[0]
+                    </div>
+                    <div class="d-inline-flex flex-column fw-bold">
+
+                        <span>@ViewBag.fullname</span>
+                        <span class="dropdown-toggle" style="font-size: 14px; font-weight: 400">@ViewBag.profile</span>
+                    </div>
+
+                </a>
+                <div class="dropdown-menu dropdown-menu1 border-0 ps-0 mt-0 pt-0">
+                    <a class="dropdown-item " asp-controller="Users" asp-action="ChangePassword" asp-route-id="@ViewBag.userCode">Change Password</a>
+                    <a class="dropdown-item text-decoration-none " asp-action="Logout" asp-controller="External">Sign Out</a>
+                </div>
+
+            </div>
+
+
+    <div id="notificationIcon" style="position: fixed; top: 20px; right: 220px; cursor: pointer; z-index: 100;">
+        <b style="color: #880000; font-weight: bold; margin: 0; position: relative; display: inline-block;">
+            <span style="color: #880000; position: relative;">
+                <i class="fas fa-bell"></i>
+                @if (expiringApplicationsCount > 0)
+                {
+                    <span style="position: absolute; top: -10px; right: -15px; background-color: #ff0000; color: #fff; border-radius: 50%; padding: 2px 6px; font-size: 10px;">
+                        @expiringApplicationsCount
+                    </span>
+                }
+            </span>
+        </b>
+    </div>
+
+
+        <div id="settings" style="">
+            <a asp-action="Index" asp-controller="Maintenance"><i class="fa fa-cog" aria-hidden="true"></i></a>
+        </div>
+
+        <div id="notificationContent" style="display: none; position: fixed; top: 40px; right: 10px; background-color: #fff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 8px; z-index: 100; width: 300px; max-height: 400px; overflow-y: auto;">
+            <div style="padding: 10px; border-bottom: 1px solid #ddd;">
+                <b style="color: #ff0000; font-weight: bold; margin: 0; font-size: 1.2em;">
+                    <i class="fas fa-bell" style="margin-right: 8px;"></i>
+                    Notifications
+                </b>
+            </div>
+
+            <div style="padding: 10px;">
+                <p style="color: #333; margin: 0 0 10px 0; font-size: 0.9em;">
+                    There are @expiringApplicationsCount application(s) expiring soon.
+                </p>
+
+                <ul style="list-style-type: none; padding: 0; margin: 0;">
+                    @foreach (var app in (List<AIM.Models.Application>)ViewBag.applicationsExpiringSoon)
+                    {
+                        DateTime currentDate = DateTime.Now;
+                        DateTime expiryDate = app.AppExpiryDate ?? currentDate;
+
+                        var timeLeft = expiryDate > currentDate ? expiryDate - currentDate : TimeSpan.Zero;
+                        var monthsLeft = (int)(timeLeft.TotalDays / 30);
+                        var daysLeft = timeLeft.Days;
+
+                        <li style="margin-bottom: 10px;">
+                            <a asp-action="Details" asp-controller="Applications" asp-route-id="@app.AppCode" style="text-decoration: none; color: #333;">
+                                <span style="display:none">See Application Details</span>
+                                <b>@app.AppName</b> - Expires on: @(app.AppExpiryDate.HasValue ? app.AppExpiryDate.Value.ToString("MMMM dd, yyyy") : "N/A")
+                                <br />
+                                @if (expiryDate < currentDate)
+                                {
+                                    <span style="color: #ff0000;">Expired</span>
+                                }
+                                else if (monthsLeft > 0)
+                                {
+                                    <span>@monthsLeft months left</span>
+                                }
+                                else
+                                {
+                                    <span>@daysLeft days left</span>
+                                }
+                            </a>
+                        </li>
+                    }
+                </ul>
+
+                <div style="text-align: center; margin-top: 10px;">
+                    <a href="@Url.Action("Index", "Home")" style="color: #0073e6; text-decoration: none;">View All Notifications</a>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <script>
+            var icon = document.getElementById('notificationIcon');
+            var content = document.getElementById('notificationContent');
+
+            // Toggle visibility on icon click
+            icon.addEventListener('click', function () {
+                content.style.display = content.style.display === 'none' ? 'block' : 'none';
+            });
+
+            // Hide content if a click occurs outside of it
+            document.addEventListener('click', function (event) {
+                var isClickInsideContent = content.contains(event.target);
+                var isClickOnIcon = icon.contains(event.target);
+
+                if (!isClickInsideContent && !isClickOnIcon) {
+                    content.style.display = 'none';
+                }
+            });
+            document.querySelectorAll('.list-group-item a').forEach(function (element) {
+                element.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    window.location.href = this.getAttribute('href');
+                });
+            });
+        </script>
+
+    }
+
+    <div class="d-flex" style="height:100vh;">
+       
+        @if (userCode != null && fullname != null)
+        {
+            <button id="toggleHeaderButton" class="btn fixed-button" data-is-visible="true">
+                <i class="fas fas fa-bars d-none"></i> <!-- Double chevron for when header is visible -->
+                <i class="fas fa-angle-double-left "></i> <!-- Double chevron for when header is hidden -->
+            </button>
+            <header id="header" class="d-flex flex-column" style="min-height:100%;width:15%;min-width:fit-content;overflow-y:auto;overflow-x:hidden;background-color:#747D62;position:relative; scrollbar-width:thin; color:white;">
+
+                <nav class=" navbar-light box-shadow p-0 h-100">
+
+                    <div class="ms-3 container-fluid d-flex flex-column position-relative h-100 p-0">
+
+                        <div class=" d-flex justify-content-start align-items-center me-5">
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/MicrosoftTeams-image (1).png" width="90" /></a>
+                        </div>
+
+
+
+                        <div class="ms-1 d-xl-flex flex-column justify-content-center " style="margin-top:15%; width:-webkit-fill-available">
+                            <h6 class="align-items-xl-center" style="margin-left:30%; margin-bottom:10%;">MENU</h6>
+                            <ul class="Categories navbar-nav flex-grow-1">
+                                @{
+                                    // Create a dictionary for title modifications
+                                    var titleModifications = new Dictionary<string, string>
+                                    {
+                                    { "BUSINESSIMPACTS", "BUSINESS IMPACTS" },
+                                    { "SLALEVELS", "SLA LEVELS" },
+                                    { "APPLOCATIONS", "APPLICATION LOCATIONS" },
+                                    { "LEVEL3OWNER", "LEVEL 3 OWNER" },
+                                    { "LEVEL3", "LEVEL 3" },
+                                    { "AUTHMETHODS", "AUTHENTICATION METHODS" },
+                                    { "CRITICALLEVELS", "CRITICAL LEVELS" },
+                                    { "FUNCTIONALAREAS", "FUNCTIONAL AREAS" },
+                                    { "LEVEL2", "LEVEL 2" },
+                                    { "OPERATINGSYSTEMS", "OPERATING SYSTEMS" },
+                                    { "PRINTSPOOLERS", "PRINT SPOOLERS" },
+                                    { "SYSTEMCLASSES", "SYSTEM CLASSES" },
+                                    { "SUPPORTTYPES", "SUPPORT TYPES" },
+                                    { "APPCATEGORIES", "APPLICATION CATEGORIES" }
+                                    };
+
+                                            // Create a list of excluded module titles
+                                    var excludedModuleTitles = new List<string>
+                                    {
+                                    "APPCONTACTS",
+                                    "APPDEPTPROCOWNERS",
+                                    "APPIPADDRESSES",
+                                    "APPFUNCTIONALAREAOWNERS",
+                                    "APPMODULEDEPENDENCIES",
+                                    "APPSUPPORTS",
+                                    "BROWSERCOMPATIBILITIES",
+                                    "APPAREAAFFECTEDS",
+                                    "APPBUSINESSIMPACTS",
+                                    "APPDEPENDENCIES",
+                                    "APPSYSTEMAFFECTEDS",
+                                    "DEPARTMENTPROCESSOWNERS"
+                                    };
+
+                                    foreach (var category in ViewBag.categories)
+                                    {
+                                        if(category.CategoryName != "MAINTENANCE"){
+                                            <li class="nav-item me-4 dropdown mb-3">
+                                                <a class="nav-link dropdown-hover toggleIcon" id="categoryDropdown-@category.CategoryId" role="button" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-chevron-right me-2"></i>
+                                                    @category.CategoryName
+                                                </a>
+                                                <div class="dropdown-menu border-0 ps-0 mt-0 pt-0" aria-labelledby="categoryDropdown-@category.CategoryId">
+                                                    @foreach (var module in ViewBag.modules)
+                                                    {
+                                                        if (module.ModuleCategory == category.CategoryId && !excludedModuleTitles.Contains(module.ModuleTitle))
+                                                        {
+                                                            var displayTitle = module.ModuleTitle;
+                                                            // Check if the module title needs modification
+                                                            if (titleModifications.ContainsKey(module.ModuleTitle))
+                                                            {
+                                                                displayTitle = titleModifications[module.ModuleTitle];
+                                                            }
+
+                                                            <a class="dropdown-item ps-3 pe-0 module-link"
+                                                               asp-controller="@module.ModuleTitle"
+                                                               asp-action="Index"
+                                                               data-controller="@module.ModuleTitle"
+                                                               data-action="Index">
+                                                                @displayTitle
+                                                            </a>
+                                                        }
+                                                    }
+                                                </div>
+                                            </li>
+                                         }               
+                                    }
+                                }
+                            </ul>
+
+
+
+                        </div>
+
+
+                    </div>
+
+                </nav>
+
+            </header>
+        }
+
+
+
+        <div class="container-fluid p-0 m-0 ps-3" style="background:linear-gradient(180deg, #EEF1E6 0%, #EEF1E6 65px, white 65px, white 100%);">
+        
+            <main role="main" class="pb-3 p-4 m-3 me-0 mb-0 card border-0 " style="border-radius:25px;height:93vh;min-height:93vh;overflow:auto;min-width:80vw; background-color:transparent;">
+                @RenderBody()
+
+              
+            </main>
+        </div>
+    </div>
+       
+
+  
+   
+
+
+@*    <footer class="border-top footer">
+        <div class="container text-white text-center">
+            &copy; 2023 - AIM 
+        </div>
+    </footer>*@
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-ui/dist/jquery-ui.min.js"></script>
+    <script src="~/lib/datatables.net/js/jquery.datatables.js"></script>
+    <script src="~/lib/datatables.net/js/jquery.datatables.min.js"></script>
+    <script src="~/lib/datatables.net-bs5/js/datatables.bootstrap5.js"></script>
+    <script src="~/lib/datatables.net-bs5/js/datatables.bootstrap5.min.js"></script>
+    <script>
+
+        function applyDynamicContentStyling(title) {
+            $('input[type="text"]').on('input', function () {
+                // Get the current value of the input
+                var currentValue = $(this).val();
+
+                // Convert the input to uppercase
+                var uppercaseValue = currentValue.toUpperCase();
+
+                // Set the uppercase value back to the input
+                $(this).val(uppercaseValue);
+            });
+
+            $('input:contains("Save")').addClass("my-5")
+            // Find the anchor element containing the text "Back to List"
+            var backToListLink = $('a:contains("Back to List")');
+
+            // Check if the anchor element doesn't already contain an icon with the class "fas fa-retweet me-1"
+            if (backToListLink.find('i.fas.fa-retweet.me-1').length === 0) {
+                // Create a Font Awesome icon element and prepend it to the anchor element
+                var icon = $('<i class="fas fa-retweet me-1"></i>'); // Replace with the appropriate Font Awesome class for your desired icon
+                backToListLink.prepend(icon);
+            }
+
+            // Set the text color to "text-dark"
+            backToListLink.addClass("text-dark");
+            $('.btn.btn-primary').addClass("mt-3");
+            $('.form-group .form-control').addClass("mb-5");
+            $('.nav-tabs').addClass('mb-3');
+            $('h1:contains("Index")').html(`<h4>${title}</h4>`);
+            $('p:has(> a:only-child)').addClass('add-container');
+            $('p > a').addClass('add');
+            $('p:has(> a:only-child)').find('a').addClass('add');
+            if (title == "AREAS") {
+                $("a:contains('AREAS'):not(:contains('FUNCTIONALAREAS'))").addClass("active");
+
+            } 
+            if (title === "APPLICATIONS" || title === "APPCONTACTS" || title === "APPDEPTPROCOWNERS" || title === "APPIPADDRESSES" || title === "APPFUNCTIONALAREAOWNERS" || title === "APPMODULEDEPENDENCIES" || title === "APPSUPPORTS" || title === "BROWSERCOMPATIBILITIES" || title === "APPAREAAFFECTEDS" || title === "APPSYSTEMAFFECTEDS") {
+                    // Remove "APP" prefix if it's not "APPLICATIONS"
+                    if (title !== "APPLICATIONS" && title !== "BROWSERCOMPATIBILITIES" ){
+                        title = title.substring(3);
+                    }
+                    if(title == "DEPTPROCOWNERS")
+                    {
+                    title = "DEPARTMENT PROCESS OWNER"
+                    }
+                    if (title == "IPADDRESSES") {
+                        title = "IP Address"
+                    }
+                    if (title == "FUNCTIONALAREAOWNERS") {
+                        title = "FUNCTIONAL AREA OWNER"
+                    }
+                    if (title == "MODULEDEPENDENCIES") {
+                        title = "MODULE DEPENDENCY"
+                    }
+                    if (title == "APPSUPPORTS") {
+                        title = "SUPPORT"
+                    }
+                   if (title == "BROWSERCOMPATIBILITIES") {
+                        title = "BROWSER COMPATIBILITY"
+                    }
+                if (title == "AREAAFFECTEDS") {
+                    title = "AREA AFFECTED"
+                }
+                if (title == "SYSTEMAFFECTEDS") {
+                    title = "SYSTEM AFFECTED"
+                }
+            }
+
+            $(".module-link.nav-link").css("color", "#101010");
+            $(".module-link.nav-link").css("font-weight", "bold")
+
+
+            
+            $('p:has(> a:only-child)').find('a').html(`<i class="fas fa-plus"></i> Add New ${title}`);
+          
+            $("table").addClass("table table-hover border");
+            $("thead tr").css("background-color", "rgba(249,249,249,255)");
+            $("thead tr th").css("border-bottom", "none");
+           
+
+            var table = $('table').DataTable({
+                "jQueryUI": true,
+                "autoWidth": true,
+                "lengthChange": false,
+           
+                "pageLength": 10,
+                "language": {
+                    "info": ""
+                },
+                "drawCallback": function (settings) {
+                    // This function is called every time the table is redrawn, including when pages change.
+
+                    // Target <a> elements with an href attribute under a <td> element
+                    $("td a[href]").each(function () {
+                        var href = $(this).attr("href");
+                        if (href.includes("Edit")) {
+                            $(this).html('<i class="fas fa-edit"></i> Edit ');
+                        } else if (href.includes("Details")) {
+                            $(this).html('<i class="fas fa-info-circle"></i> Details');
+                        } else if (href.includes("Delete")) {
+                            $(this).html('<i class="fas fa-trash-alt"></i> Delete');
+                        }
+
+                    });
+
+                    // Target the last child <td> of each <tr> and add the classes
+                    $("tr td:last-child").addClass("d-flex justify-content-evenly");
+                    $("tr td a").addClass("me-2");
+                    $("td:contains('AC'), dd:contains('AC')")
+                        .filter(function () {
+                            return $(this).text().trim() === 'AC';
+                        })
+                        .text("ACTIVE");
+
+
+
+                    $('table tbody tr td').each(function () {
+                        $(this).contents().filter(function () {
+                            return this.nodeType === 3; // Filter text nodes
+                        }).each(function () {
+                            this.textContent = this.textContent.replace('|', '').trim();
+                        });
+                    });
+
+                    
+
+
+                }
+            });
+
+        }
+        $(document).ready(function () {
+
+            // Function to toggle the header visibility and icons
+            function toggleHeaderVisibility() {
+                var header = $("#header");
+                var toggleButton = $("#toggleHeaderButton");
+                if (header.hasClass("d-none")) {
+                    // Show the header
+                    header.removeClass("d-none");
+                  
+                    toggleButton.find(".fas.fa-angle-double-left").removeClass("d-none");
+                     toggleButton.find(".fas.fa-bars").addClass("d-none");
+                    toggleButton.attr("data-is-visible", "true");
+                } else {
+                    // Hide the header
+                    header.addClass("d-none");
+                    toggleButton.find(".fas.fa-angle-double-left").addClass("d-none");
+                    toggleButton.find(".fas.fa-bars").removeClass("d-none");
+
+
+                 
+                    toggleButton.attr("data-is-visible", "false");
+                }
+
+                // Toggle the left position based on visibility state
+                var isVisible = toggleButton.attr("data-is-visible") === "true";
+                toggleButton.css("left", isVisible ? "11%" : "15px");
+            }
+
+            // Toggle the header when the button is clicked
+            $("#toggleHeaderButton").click(function () {
+                toggleHeaderVisibility();
+            });
+            $('.nav-link').on('click', function (e) {
+                e.preventDefault(); // Prevent the default behavior of the link
+
+                // Close all other open dropdown menus
+                $('.nav-link').not(this).next('.dropdown-menu').removeClass('show');
+
+                // Toggle the 'show' class on the clicked nav-link's dropdown menu
+                var dropdownMenu = $(this).next('.dropdown-menu');
+                dropdownMenu.toggleClass('show');
+            });
+
+
+            applyDynamicContentStyling("Index");
+
+            var moduleLinkClicked = false;
+
+            $(document).on('click', '.module-link', function (event) {
+                event.preventDefault();
+                moduleLinkClicked = true;
+
+                // Remove the 'active' class from all tabs
+                $('.module-link').removeClass('active');
+
+                // Add the 'active' class to the clicked tab if aria-selected is true
+                if (moduleLinkClicked) {
+                    $(this).addClass('active');
+                }
+
+                var controller = $(this).data('controller');
+                var action = $(this).data('action');
+                var dataId = $(this).data('id'); // Check for the 'data-id' attribute
+
+                if (dataId) {
+                    // If 'data-id' is present, include it in the URL
+                    $.ajax({
+                        type: 'GET',
+                        url: '/' + controller + '/' + action,
+                        data: { id: dataId }, // Pass dataId as data
+                        success: function (response) {
+                            if (response && response.length > 0) {
+                                // Data is available, display the table or view
+                                $('.content').html(response);
+                                applyDynamicContentStyling(controller);
+                                 $("h4:contains("+ controller +")").html("");
+                            } else {
+                                // No data recorded, display a message
+                                $('.content').html("No data recorded.");
+                            }
+                        },
+                        error: function (error) {
+                            console.error('Error fetching data:', error);
+                            $('.content').html(error);
+
+                        }
+                    });
+
+                } else {
+                    // If 'data-id' is not present, use the original URL without the dataId
+                    $.ajax({
+                        type: 'GET',
+                        url: '/' + controller + '/' + action,
+                        success: function (response) {
+                            $('main').html(response);
+                            applyDynamicContentStyling(controller);
+                        },
+                        error: function (error) {
+                            console.error('Error fetching data:', error);
+                        }
+                    });
+                }
+            });
+
+
+            // Handle closing the dropdown menu using event delegation
+            $(document).on('click', function (e) {
+                if (!$('.navbar').is(e.target) && $('.navbar').has(e.target).length === 0 && !moduleLinkClicked) {
+                    $('.dropdown-menu').removeClass('clicked');
+                }
+                moduleLinkClicked = false;
+            });
+
+            $(document).on('click', 'a:contains("Add"), a:contains("Edit"), a:contains("Details"), a:contains("Delete"), a:contains("Back"), a:contains("Modify"),a:contains("See Applications"),a:contains("See Application Details")', function (event) {
+                event.preventDefault(); // Prevent the default link behavior
+                // Get the href attribute of the clicked link
+
+                var href = $(this).attr('href');
+
+                // Extract the controller and action from the href
+                var parts = href.split('/'); // Split the href by '/'
+                var controller = parts[1].toUpperCase();   // The controller is the second part
+                var action = parts[2];       // The action is the third part
+
+                // Make an AJAX request to get the content for the clicked module
+                $.ajax({
+                    type: 'GET',
+                    url: href,
+                    success: function (response) {
+                        // Update the dynamic content with the retrieved data
+                        $('main').html(response);
+                        applyDynamicContentStyling(controller);
+                        $("td:contains('AC'), dd:contains('AC')")
+                            .filter(function () {
+                                return $(this).text().trim() === 'AC';
+                            })
+                            .text("ACTIVE");
+                        
+                       
+                    },
+                    error: function (error) {
+                        // Handle errors if necessary
+                        console.error('Error fetching data:', error);
+                    }
+                });
+            });
+
+
+            $('main').on('submit', 'form[method="post"][asp-action!=""]', function (event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                var form = $(this);
+
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: form.serialize(), // Serialize the form data
+                    success: function (response) {
+                        $("main").html(response);
+                        var action = form.attr('action');
+                        var controller = getControllerName(action);
+                        applyDynamicContentStyling(controller);
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        var errorMatch = jqXHR.responseText;
+
+                        if (errorMatch.includes("Violation of PRIMARY KEY constraint")) {
+                            alert("A record with the same data already exists. Please enter a unique value.");
+                        } else if (errorMatch.includes("SomeOtherSQLServerErrorPattern")) {
+                            alert("Custom error message for another SQL Server error.");
+                        } else {
+                            alert("An error occurred: " + jqXHR.responseText);
+                            console.error('Error submitting form:', jqXHR.responseText);
+                        }
+                    }
+                });
+
+                function getControllerName(action) {
+                    // Split the action URL by '/' and get the second element (controller name)
+                    var segments = action.split('/');
+                    if (segments.length >= 2) {
+                        return segments[1];
+                    }
+                    return null; // Handle the case where the action URL doesn't contain a controller name
+                }
+            });
+
+
+
+
+            $('table td').each(function () {
+                var $td = $(this);
+                var originalText = $td.text();
+
+                if (this.scrollWidth > this.clientWidth) {
+                    $td.text('*');
+                    $td.attr('title', originalText); // Add a tooltip with the full text
+                }
+            });
+            // JavaScript
+const toggleIcons = document.getElementsByClassName("toggleIcon");
+
+// Loop through each toggleIcon element and add an event listener
+for (let i = 0; i < toggleIcons.length; i++) {
+    toggleIcons[i].addEventListener("click", function () {
+        const icon = this.querySelector("i"); // Select the <i> element inside the clicked element
+
+        // Check if the clicked icon is currently in the "fa-chevron-right" state
+        if (icon.classList.contains("fa-chevron-right")) {
+            // Remove the "fa-chevron-right" class and add the "fa-chevron-down" class
+            icon.classList.remove("fa-chevron-right");
+            icon.classList.add("fa-chevron-down");
+
+            // Loop through all toggleIcons and reset the other icons to "fa-chevron-right"
+            for (let j = 0; j < toggleIcons.length; j++) {
+                if (j !== i) {
+                    const otherIcon = toggleIcons[j].querySelector("i");
+                    otherIcon.classList.remove("fa-chevron-down");
+                    otherIcon.classList.add("fa-chevron-right");
+                }
+            }
+        } else {
+            // If the clicked icon is in the "fa-chevron-down" state, change it back to "fa-chevron-right"
+            icon.classList.remove("fa-chevron-down");
+            icon.classList.add("fa-chevron-right");
+        }
+    });
+}
+
+          
+
+        });
+
+
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

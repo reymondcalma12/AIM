@@ -1,0 +1,52 @@
+﻿@model IEnumerable<AIM.Models.AppDeptProcOwner>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+           
+       
+            <th>
+                Department
+            </th>
+            <th>
+               Created By
+            </th>
+            <th>
+                Created Date
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department.DeptName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserFullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDt)
+                </td>
+            
+           
+                <td>
+                   
+                    @Html.ActionLink("Delete", "Delete", new { id = $"{item.AppCode}-{item.DeptCode}" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

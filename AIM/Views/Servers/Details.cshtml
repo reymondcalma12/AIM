@@ -1,0 +1,78 @@
+﻿@model AIM.Models.Server
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Server</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ServerName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ServerName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ServerIPAddress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ServerIPAddress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ServerType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type.TypeName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ServerHostName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ServerHostName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ServerHostIPAddress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ServerHostIPAddress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ServerStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ServerStatus)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ServerCreatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ServerCreatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ServerCreatedDt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ServerCreatedDt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ServerUpdatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ServerUpdatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ServerUpdatedDt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ServerUpdatedDt)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ServerCode">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,59 @@
+﻿@model AIM.Models.AppLocation
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>AppLocation</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="LocationCode" />
+            <div class="form-group">
+                <label asp-for="LocationName" class="control-label"></label>
+                <input asp-for="LocationName" class="form-control" />
+                <span asp-validation-for="LocationName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LocationStatus" class="control-label"></label>
+                <select asp-for="LocationStatus" class="form-control" asp-items="ViewBag.LocationStatus"></select>
+                <span asp-validation-for="LocationStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="LocationCreatedBy" class="control-label"></label>
+                <select asp-for="LocationCreatedBy" class="form-control" asp-items="ViewBag.LocationCreatedBy"></select>
+                <span asp-validation-for="LocationCreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="LocationCreatedDt" class="control-label"></label>
+                <input asp-for="LocationCreatedDt" class="form-control" />
+                <span asp-validation-for="LocationCreatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="LocationUpdatedBy" class="control-label"></label>
+                <select asp-for="LocationUpdatedBy" class="form-control" asp-items="ViewBag.LocationUpdatedBy"></select>
+                <span asp-validation-for="LocationUpdatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="LocationUpdatedDt" class="control-label"></label>
+                <input asp-for="LocationUpdatedDt" class="form-control" />
+                <span asp-validation-for="LocationUpdatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

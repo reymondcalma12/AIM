@@ -1,0 +1,212 @@
+﻿@model IEnumerable<AIM.Models.User>
+
+@{
+    ViewData["Title"] = "Login"; 
+    Layout = null;	
+    if (TempData["PasswordChangeSuccess"] != null && (bool)TempData["PasswordChangeSuccess"])
+    {
+        <script>
+            alert("Your password has been successfully changed.");
+        </script>
+}
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/AIM.styles.css" asp-append-version="true" />
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+
+	
+	<style>
+    label {
+        font-size: 13px;
+        padding: 0;
+        color: #546b81;
+    }
+
+    input {
+        border-bottom: 1px solid rgb(212, 218, 223);
+    }
+
+    .container-xl {
+        width: 525px;
+        box-shadow: 2px 2px 6px 0 rgba(41, 70, 97, .1);
+        padding: 0;
+        height: 665px;
+    }
+
+    .form-floating>.form-control,
+    .form-floating>.form-control-plaintext {
+        padding: 1rem 0;
+    }
+
+    .form-floating>.form-control,
+    .form-floating>.form-control-plaintext,
+    .form-floating>.form-select {
+        height: calc(2rem + calc(var(--bs-border-width) * 2));
+        min-height: calc(2rem + calc(var(--bs-border-width) * 2));
+        line-height: 1.25;
+    }
+
+    .form-control:focus {
+        color: var(--bs-body-color);
+        outline: 0;
+        box-shadow: none;
+        box-shadow: 0 1px 0 #1a82e2;
+    }
+
+    .form-floating>label {
+        padding: .5rem 0rem;
+    }
+
+    a {
+        color: #489be8;
+        text-decoration: none;
+    }
+
+    .btn {
+        padding: 11px 30px;
+        color: #fff;
+        background-color: #1188e6;
+        border-color: #1288e5;
+    }
+
+    body {
+        overflow: hidden;
+        font-family: Colfax, Helvetica, Arial, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        color: #546b81;
+    }
+
+    span {
+        font-size: 13px;
+        font-weight: normal;
+    }
+</style>
+
+
+<div class="d-flex" style="height: 100vh;">
+    <div class="container-xl  position-relative mt-2">
+        <div class="row w-75 m-auto">
+            <div class="col-lg-12 mt-5">
+                <div class="text-center justify-content-center align-items-center">
+                    							<img src="~/img/MicrosoftTeams-image (1).png" width="150px" class="mx-auto d-block mt-4" alt="Logo">
+
+                </div>
+            </div>
+
+            <div class="col-lg-12 mt-4">
+
+                    <form id="login-form" method="post" asp-controller="YourControllerName" asp-action="YourActionName">
+                        <div class="form-floating mb-5 mt-3 w-100 m-auto">
+                            <input required type="text" class="form-control border-top-0 border-start-0 border-end-0 rounded-0" id="username" name="username" placeholder="">
+                            <label for="username">Username</label>
+                        </div>
+                        <div class="form-floating mb-2 mt-3 w-100 m-auto">
+                            <input required type="password" class="form-control border-top-0 border-start-0 border-end-0 rounded-0" id="password" name="password" placeholder="">
+                            <label for="password">Password</label>
+                        </div>
+                        <div class="text-end">
+                            <a href="#">Forgot your password?</a>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="sign-in btn btn-primary mt-5 rounded-0 text-center">Sign in</button>
+                        </div>
+                    </form>
+
+
+            </div>
+        </div>
+     
+        <div class="container position-absolute text-center p-4 " style="bottom: 1rem; background: hsla(0,0%,62%,.1);">
+                <input type="checkbox" id="adAuthCheckbox" class="me-1" /> <span>
+                    Use AD Authentication
+                </span>
+        </div>
+    </div>
+
+</div>
+</div>
+
+	<script>
+        $(document).ready(function () {
+            $('#login-form').submit(function (event) {
+                event.preventDefault();
+                var username = $('#username').val();
+                var password = $('#password').val();
+                var useADAuth = $('#adAuthCheckbox').prop('checked'); // Get the value of the AD authentication checkbox
+
+
+                $.ajax({
+                    url: '/Users/Login',
+                    type: 'POST',
+                    data: {
+                        username: username,
+                        password: password,
+                        useADAuthentication: useADAuth // Pass the value of the AD authentication checkbox
+                    },
+                    success: function (response) {
+                        $('#username').removeClass('error'); // Remove the error class from both fields
+                        $('#password').removeClass('error');
+                        $('#username-error').remove(); // Remove any existing username error message
+                        $('#password-error').remove(); // Remove any existing password error message
+
+                        if (response.success === true) {
+                            window.location.href = '/';
+                        }
+                        else {
+                            if (response.message === "User does not exist.") {
+                                $('#username').addClass('error'); // Add the error class to the username field
+                                $('#username').after('<div id="username-error" class="text-danger">' + response.message + '</div>');
+                            }
+                            else if (response.message === "Incorrect password.") {
+                                $('#password').addClass('error'); // Add the error class to the password field
+                                $('#password').after('<div id="password-error" class="text-danger">' + response.message + '</div>');
+                            }
+                            else if (response.message === "User " + username + " is not registered to the System") {
+                                $('#username').addClass('error'); // Add the error class to the username field
+
+                                // Remove any existing error message (if present)
+                                $('#password-error').remove();
+
+                                // Add the new error message
+                                $('#username').after('<div id="username-error" class="text-danger">' + response.message + '</div>');
+                            }
+                        }
+                    },
+                    error: function (e) {
+                        console.log(e);
+                        alert('An error occurred while processing your request.');
+                    }
+                });
+            });
+        });
+
+
+
+	</script>
+
+		
+
+
+
+</body>
+</html>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
+

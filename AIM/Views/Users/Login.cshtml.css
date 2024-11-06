@@ -1,0 +1,35 @@
+﻿body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.sign-in {
+    background-color: #106F04;
+    border-color: #106F04;
+}
+
+    .sign-in:hover {
+        color: #106F04;
+        background-color: white;
+        border-color: #106F04;
+    }
+
+.form-control:focus {
+    border-width: 3px;
+    border-color: #106F04;
+    box-shadow: 0 0 0 0.1rem green;
+}
+
+.form-control.error {
+    border-color: red;
+    box-shadow: 0 0 0 0.1rem red;
+}
+
+.form-control.success {
+    border-color: green;
+    box-shadow: 0 0 0 0.1rem green;
+}
+
+.form-control.success {
+    border-color: green;
+    box-shadow: 0 0 0 0.1rem green;
+}

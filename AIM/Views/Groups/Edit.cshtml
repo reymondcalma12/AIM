@@ -1,0 +1,59 @@
+﻿@model AIM.Models.Group
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Group</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="GroupCode" />
+            <div class="form-group">
+                <label asp-for="GroupName" class="control-label"></label>
+                <input asp-for="GroupName" class="form-control" />
+                <span asp-validation-for="GroupName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GroupStatus" class="control-label"></label>
+                <select asp-for="GroupStatus" class="form-control" asp-items="ViewBag.GroupStatus"></select>
+                <span asp-validation-for="GroupStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="GroupCreatedBy" class="control-label"></label>
+                <select asp-for="GroupCreatedBy" class="form-control" asp-items="ViewBag.GroupCreatedBy"></select>
+                <span asp-validation-for="GroupCreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="GroupCreatedDt" class="control-label"></label>
+                <input asp-for="GroupCreatedDt" class="form-control" />
+                <span asp-validation-for="GroupCreatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="GroupUpdatedBy" class="control-label"></label>
+                <select asp-for="GroupUpdatedBy" class="form-control" asp-items="ViewBag.GroupUpdatedBy"></select>
+                <span asp-validation-for="GroupUpdatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="GroupUpdatedDt" class="control-label"></label>
+                <input asp-for="GroupUpdatedDt" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+                <span asp-validation-for="GroupUpdatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

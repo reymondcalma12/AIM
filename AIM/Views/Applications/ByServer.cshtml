@@ -1,0 +1,104 @@
+﻿@model IEnumerable<AIM.Models.Application>
+
+@{
+    ViewData["Title"] = "Index";
+    var serverName = Model.FirstOrDefault()?.Server?.ServerName;
+    var serverIPAddress = Model.FirstOrDefault()?.Server?.ServerIPAddress;
+}
+
+<h1>
+    List of Applications on @serverName (@serverIPAddress)
+</h1>
+
+
+
+
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+    </div>
+
+</div>
+
+<table class="table">   
+    <thead>
+        <tr>
+            <th>
+                Application
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                Description
+            </th>
+
+            <th>
+                Critical Level
+            </th>
+            <th>
+                SLA Level
+            </th>
+            <th>
+                Location
+            </th>
+            <th>Date Created</th>
+            <th> Created By</th>
+            <th> Expiry Date</th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CatName)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppDescription)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CriticalLevel.CriticalLevelName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location.LocationName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CatName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppCreatedDt)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppCreatedBy)
+                </td>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppExpiryDate)
+                </td>
+
+
+
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.AppCode">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.AppCode">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.AppCode">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+
+</script>

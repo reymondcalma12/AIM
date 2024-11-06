@@ -1,0 +1,82 @@
+﻿@model AIM.Models.RPortOsla
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>RPortOsla</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" hidden>
+                <label asp-for="RPortOslaCode" class="control-label"></label>
+                <input asp-for="RPortOslaCode" class="form-control" value="sample"/>
+                <span asp-validation-for="RPortOslaCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AppCode" class="control-label"></label>
+                <select asp-for="AppCode" class ="form-control" asp-items="ViewBag.AppCode"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="AppLocation" class="control-label"></label>
+                <select asp-for="AppLocation" class ="form-control" asp-items="ViewBag.AppLocation"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="AppCurrentRPO" class="control-label"></label>
+                <input asp-for="AppCurrentRPO" class="form-control" />
+                <span asp-validation-for="AppCurrentRPO" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AppProposedRPO" class="control-label"></label>
+                <input asp-for="AppProposedRPO" class="form-control" />
+                <span asp-validation-for="AppProposedRPO" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AppRTO" class="control-label"></label>
+                <input asp-for="AppRTO" class="form-control" />
+                <span asp-validation-for="AppRTO" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AppSLALevel" class="control-label"></label>
+                <select asp-for="AppSLALevel" class ="form-control" asp-items="ViewBag.AppSLALevel"></select>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="AppStatus" class="control-label"></label>
+                <select asp-for="AppStatus" class ="form-control" asp-items="ViewBag.AppStatus"></select>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="AppCreatedBy" class="control-label"></label>
+                <select asp-for="AppCreatedBy" class ="form-control" asp-items="ViewBag.AppCreatedBy"></select>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="AppCreatedDt" class="control-label"></label>
+                <input asp-for="AppCreatedDt" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+                <span asp-validation-for="AppCreatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="AppUpdatedBy" class="control-label"></label>
+                <select asp-for="AppUpdatedBy" class ="form-control" asp-items="ViewBag.AppUpdatedBy"></select>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="AppUpdatedDt" class="control-label"></label>
+                <input asp-for="AppUpdatedDt" class="form-control" />
+                <span asp-validation-for="AppUpdatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

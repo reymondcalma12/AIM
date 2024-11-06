@@ -1,0 +1,252 @@
+﻿@model AIM.Models.Application
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="d-flex align-items-baseline gap-5">
+    <h1>@Html.DisplayFor(model => model.AppName)</h1>
+    <a asp-action="Edit" asp-route-id="@Model?.AppCode"><i class="fas fa-edit"></i> Edit</a> 
+    <a asp-action="Index"><i class="fas fa-chevron-left"></i> Back</a>
+</div>
+
+<div>
+   
+   
+    <hr />
+    <div class="row">
+
+    <dl class="row col-sm-6">
+        <dt class="col-sm-5">
+            Application Code
+        </dt>
+        <dd class="col-sm-5">
+            @Html.DisplayFor(model => model.AppCode)
+        </dd>
+        <dt class = "col-sm-5">
+            Application Name
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.AppName)
+        </dd>
+        <dt class = "col-sm-5">
+           Version
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.AppVersion)
+        </dd>
+        <dt class = "col-sm-5">
+           Description
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.AppDescription)
+        </dd>
+        <dt class = "col-sm-5">
+            Program API Endpoint
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.AppProgramApiEndpoint)
+        </dd>
+        <dt class = "col-sm-5">
+            API URL Endpoint
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.AppApiUrlEndpoint)
+        </dd>
+        <dt class = "col-sm-5">
+           Port Used
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.AppPortUsed)
+        </dd>
+        <dt class = "col-sm-5">
+            SupportSD
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.AppSupportsSD)
+        </dd>
+        <dt class = "col-sm-5">
+            Created Date
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.AppCreatedDt)
+        </dd>
+            <dt class="col-sm-5">
+                Created By
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.CreatedBy.UserFullName)
+            </dd>
+            <dt class="col-sm-5">
+                Expiry Date
+            </dt>
+             <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.AppExpiryDate)
+            </dd>
+            <dt class="col-sm-5">
+                Subscription Type
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.tbl_aim_subscriptionType.subscriptionType_name)
+            </dd>
+        
+    </dl>
+
+        <dl class="row col-sm-6">
+        
+        <dt class="col-sm-5">
+           Category
+        </dt>
+        <dd class="col-sm-5">
+            @Html.DisplayFor(model => model.Category.CatName)
+        </dd>
+        <dt class="col-sm-5">
+            Critical Level
+        </dt>
+        <dd class="col-sm-5">
+            @Html.DisplayFor(model => model.CriticalLevel.CriticalLevelName)
+        </dd>
+        <dt class="col-sm-5">
+            SLA Level
+        </dt>
+        <dd class="col-sm-5">
+            @Html.DisplayFor(model => model.SLALevel.SLALevelName)
+        </dd>
+        <dt class="col-sm-5">
+            Location
+        </dt>
+        <dd class="col-sm-5">
+            @Html.DisplayFor(model => model.Location.LocationName)
+        </dd>
+        <dt class="col-sm-5">
+           Server Used
+        </dt>
+        <dd class="col-sm-5">
+
+                <a asp-controller="Applications" asp-action="ByServer" asp-route-servercode="@Model.Server.ServerCode"> <span style="display:none">See Applications</span>
+                    @Html.DisplayFor(model => model.Server.ServerName)  <i class="fas fa-info-circle"></i><i>(Click to see the applications in this server)</i>
+                </a>
+        </dd>
+        <dt class="col-sm-5">
+         Operating System Used
+        </dt>
+        <dd class="col-sm-5">
+            @Html.DisplayFor(model => model.OS.OsName)
+        </dd>
+        <dt class="col-sm-5">
+            Authentication Method
+        </dt>
+        <dd class="col-sm-5">
+            @Html.DisplayFor(model => model.AuthMethod.AuthName)
+        </dd>
+        <dt class="col-sm-5">
+            Print Spooler
+        </dt>
+        <dd class="col-sm-5">
+            @Html.DisplayFor(model => model.PrintSpooler.SpoolerName)
+        </dd>
+        <dt class="col-sm-5">
+            Group
+        </dt>
+        <dd class="col-sm-5">
+            @Html.DisplayFor(model => model.Group.GroupName)
+        </dd>
+        <dt class="col-sm-5">
+System Class
+        </dt>
+        <dd class="col-sm-5">
+            @Html.DisplayFor(model => model.SystemClass.ClassName)
+        </dd>
+        <dt class="col-sm-5">
+           Status
+        </dt>
+        <dd class="col-sm-5">
+            @Html.DisplayFor(model => model.Status.StatusName)
+        </dd>
+      
+            <dt class="col-sm-5">
+               Updated Date
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.AppUpdatedDt)
+            </dd>
+        <dt class="col-sm-5">
+           Updated By
+        </dt>
+        <dd class="col-sm-5">
+            @Html.DisplayFor(model => model.UpdatedBy.UserFullName)
+        </dd>
+    </dl>
+
+
+    </div>
+
+    <ul class="nav nav-tabs nav-nowrap" id="myTab" role="tablist">
+        @foreach (var module in ViewBag.modules)
+        {
+            if (module.ModuleTitle == "APPCONTACTS" || module.ModuleTitle == "APPDEPTPROCOWNERS" || module.ModuleTitle == "APPIPADDRESSES" || module.ModuleTitle == "APPFUNCTIONALAREAOWNERS" || module.ModuleTitle == "APPMODULEDEPENDENCIES" || module.ModuleTitle == "APPSUPPORTS" || module.ModuleTitle == "BROWSERCOMPATIBILITIES" || module.ModuleTitle == "APPSYSTEMAFFECTEDS" || module.ModuleTitle == "APPAREAAFFECTEDS")
+            {
+                var moduleDisplayName = module.ModuleTitle; // Initialize with the default value
+
+                if (module.ModuleTitle == "APPCONTACTS")
+                {
+                    moduleDisplayName = "CONTACTS";
+                }
+                 if (module.ModuleTitle == "APPDEPTPROCOWNERS")
+                {
+                    moduleDisplayName = "DEPARTMENT PROCESS OWNERS";
+                }
+                 if (module.ModuleTitle == "APPIPADDRESSES")
+                {
+                    moduleDisplayName = "IP ADDRESSES";
+                }
+                 if (module.ModuleTitle == "APPFUNCTIONALAREAOWNERS")
+                {
+                    moduleDisplayName = "FUNCTIONAL AREA OWNERS";
+                }
+                 if (module.ModuleTitle == "APPMODULEDEPENDENCIES")
+                {
+                    moduleDisplayName = "MODULE DEPENDENCIES";
+                }
+                 if (module.ModuleTitle == "APPSUPPORTS")
+                {
+                    moduleDisplayName = "SUPPORTS";
+                }
+                 if (module.ModuleTitle == "BROWSERCOMPATIBILITIES")
+                {
+                    moduleDisplayName = "BROWSER COMPATIBILITIES";
+                }
+                 if (module.ModuleTitle == "APPSYSTEMAFFECTEDS")
+                {
+                    moduleDisplayName = "SYSTEMS AFFECTED";
+                }
+                 if (module.ModuleTitle == "APPAREAAFFECTEDS")
+                {
+                    moduleDisplayName = "AREA AFFECTED";
+                }
+
+                <li class="nav-item " role="presentation">
+                    <a class="nav-link module-link" style="white-space:nowrap;"
+                       data-toggle="tab"
+                       role="tab"
+                       data-id="@Html.DisplayFor(model => model.AppCode)"
+                       data-controller="@module.ModuleTitle"
+                       data-action="Index"
+                       aria-controls="@module.ModuleTitle"
+                       aria-selected="@(module.ModuleTitle == "APPLICATIONS" ? "true" : "false")">
+                        @moduleDisplayName
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+
+
+
+
+
+
+    <div class="crudcontainer"></div>
+    <div class="content"></div>
+
+</div>
+

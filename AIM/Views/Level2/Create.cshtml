@@ -1,0 +1,55 @@
+﻿@model AIM.Models.Level2
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Level2</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Level2Name" class="control-label"></label>
+                <input asp-for="Level2Name" class="form-control" />
+                <span asp-validation-for="Level2Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Level2Status" class="control-label"></label>
+                <select asp-for="Level2Status" class ="form-control" asp-items="ViewBag.Level2Status"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Level2CreatedBy" class="control-label"></label>
+                <select asp-for="Level2CreatedBy" class ="form-control" asp-items="ViewBag.Level2CreatedBy"></select>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="Level2CreatedDt" class="control-label"></label>
+                <input asp-for="Level2CreatedDt" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+                <span asp-validation-for="Level2CreatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="Level2UpdatedBy" class="control-label"></label>
+                <select asp-for="Level2UpdatedBy" class ="form-control" asp-items="ViewBag.Level2UpdatedBy"></select>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="Level2UpdatedDt" class="control-label"></label>
+                <input asp-for="Level2UpdatedDt" class="form-control" />
+                <span asp-validation-for="Level2UpdatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

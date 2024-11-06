@@ -1,0 +1,55 @@
+﻿@model AIM.Models.BusinessImpact
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>BusinessImpact</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ImpactName" class="control-label"></label>
+                <input asp-for="ImpactName" class="form-control" />
+                <span asp-validation-for="ImpactName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImpactStatus" class="control-label"></label>
+                <select asp-for="ImpactStatus" class ="form-control" asp-items="ViewBag.ImpactStatus"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImpactCreatedBy" class="control-label"></label>
+                <select asp-for="ImpactCreatedBy" class ="form-control" asp-items="ViewBag.ImpactCreatedBy"></select>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="ImpactCreatedDt" class="control-label"></label>
+                <input asp-for="ImpactCreatedDt" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+                <span asp-validation-for="ImpactCreatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="ImpactUpdatedBy" class="control-label"></label>
+                <select asp-for="ImpactUpdatedBy" class ="form-control" asp-items="ViewBag.ImpactUpdatedBy"></select>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="ImpactUpdatedDt" class="control-label"></label>
+                <input asp-for="ImpactUpdatedDt" class="form-control" />
+                <span asp-validation-for="ImpactUpdatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

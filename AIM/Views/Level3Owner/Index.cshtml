@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AIM.Models.Level3Owner>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+          
+            <th>
+                RPortOsla
+            </th>
+            <th>
+                Level3
+            </th>
+        
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.RPortOsla.RPortOslaCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Level3.Level3Name)
+                </td>
+             
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = $"{item.RPortOsla.RPortOslaCode}-{item.Level3.Level3Code}" }) |
+                    @Html.ActionLink("Details", "Details", new { id = $"{item.RPortOsla.RPortOslaCode}-{item.Level3.Level3Code}" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = $"{item.RPortOsla.RPortOslaCode}-{item.Level3.Level3Code}" })
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

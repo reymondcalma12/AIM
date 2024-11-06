@@ -1,0 +1,55 @@
+﻿@model AIM.Models.FunctionalArea
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>FunctionalArea</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FunctionalName" class="control-label"></label>
+                <input asp-for="FunctionalName" class="form-control" />
+                <span asp-validation-for="FunctionalName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FunctionalStatus" class="control-label"></label>
+                <select asp-for="FunctionalStatus" class ="form-control" asp-items="ViewBag.FunctionalStatus"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="FunctionalCreatedBy" class="control-label"></label>
+                <select asp-for="FunctionalCreatedBy" class ="form-control" asp-items="ViewBag.FunctionalCreatedBy"></select>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="FunctionalCreatedDt" class="control-label"></label>
+                <input asp-for="FunctionalCreatedDt" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+                <span asp-validation-for="FunctionalCreatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="FunctionalUpdatedBy" class="control-label"></label>
+                <select asp-for="FunctionalUpdatedBy" class ="form-control" asp-items="ViewBag.FunctionalUpdatedBy"></select>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="FunctionalUpdatedDt" class="control-label"></label>
+                <input asp-for="FunctionalUpdatedDt" class="form-control" />
+                <span asp-validation-for="FunctionalUpdatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

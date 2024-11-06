@@ -1,0 +1,54 @@
+﻿@model IEnumerable<AIM.Models.BrowserCompatibility>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                Browser Compatible
+            </th>
+            <th>
+                Created By
+            </th>
+         
+            <th>
+                Date Created
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Browser.BrowserName)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedUser.UserFullName)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDt)
+            </td>
+           
+            
+           
+                       <td>
+                       
+                        @Html.ActionLink("Delete", "Delete", new { id = $"{item.AppCode}-{item.BrowserCode}" })
+    </td>
+
+
+        </tr>
+}
+    </tbody>
+</table>

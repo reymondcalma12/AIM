@@ -1,0 +1,369 @@
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+#header {
+    transition: all 0.5s ease-in-out!important;
+}
+
+
+@media (min-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+.error-panel {
+    display: none; /* Hide the error panel initially */
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+.nav.nav-tabs{
+    flex-wrap:nowrap!important;
+}
+
+
+a{
+    text-decoration:none;
+    color:black;
+    font-size:14px;
+}                                                                                                a
+
+tr:last-child > td {
+    border-style: none;
+    border-width: 0;
+}
+  tfoot, tr {
+    border-color: inherit;
+    border-style: none;
+    border-width: 0;
+    border-radius: 25px;
+}
+
+
+.add-container {
+    display: inline-flex;
+    justify-content: end;
+}
+
+.add{
+    color:white;
+    background-color:#747D62;
+    padding:10px;
+    border-radius:25px;
+    padding-right:25px;
+}
+
+.add:hover {
+    color: white;
+    background-color: #A6AB95;
+ 
+}
+
+th {
+    text-transform: uppercase;
+    white-space:nowrap;
+}
+
+
+
+table td {
+    font-size: 13px;
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: central;
+}
+
+table td:last-child{
+    font-size: 14px;
+    max-width: 500px;
+}
+
+body{
+    overflow:hidden;
+}
+
+
+main {
+    overflow: auto;
+}
+.dropdown-item{
+    font-size:13px;
+    
+}
+   
+.dropdown-menu {
+    background-color: rgba(251,251,250,255);
+}
+.dropdown-menu1 {
+    background-color: #183B2B!important;
+}
+
+.dropdown-menu1 a{
+    color:gold;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #565950;
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+.nav-link:hover {
+    background-color: #e9ecef;
+    border-radius:.5rem;
+}
+/* Style for the fixed button */
+.fixed-button {
+    position: fixed!important;
+    top:20px; /* Adjust the top positioning as needed */
+    left: 11%;  
+    z-index: 999; /* Set the z-index to ensure the button appears above other content */
+    padding:0px;
+    margin:0px;
+}
+
+
+
+.fixed-button .fa-bars{
+    font-size: 24px; /* Adjust the font size of the chevron icons as needed */
+    transition: transform 0.3s ease; /* Add a transition effect for the icon rotation */
+    color: black!important;
+}
+
+.fixed-button .fa-angle-double-left{
+    font-size: 24px; /* Adjust the font size of the chevron icons as needed */
+    transition: transform 0.3s ease; /* Add a transition effect for the icon rotation */
+    color: white!important;
+}
+
+/* Remove the box-shadow on focused Bootstrap buttons */
+.btn:focus {
+    box-shadow: none;
+}
+
+dl{
+    white-space:nowrap;
+}
+
+label{
+    display:inline;
+}
+
+.nav-link.module-link{
+    font-size:12px!important;
+}
+
+#notificationIcon span:hover{
+    color:gray;
+}
+
+.fa-cog:before{
+    font-size:1.3rem;
+}
+
+#settings {
+    position: fixed;
+    top: 17px;
+    right: 167px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+#settings a:hover{
+    color:#B2B89E;
+}
+
+.navbar-light .navbar-nav .nav-link{
+    color:white;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #B2B89E;
+}
+
+.dropdown-menu {
+    background-color: #EEF1E6;
+}
+
+table thead tr {
+    color: white;
+    background-color: #333333!important;
+}
+
+table.dataTable thead th{
+    text-align:center!important;
+}
+table{
+    text-align:center;
+}
+
+table tbody tr td:last-child a {
+    border: 1px solid;
+    padding: 1%;
+    border-radius: .2rem;
+}
+
+
+table tbody tr td:last-child a:first-child {
+    color:green;
+}
+
+table tbody tr td:last-child a:last-child {
+    color:red;
+}
+
+table tbody tr td:last-child a:hover {
+    color:white;
+    background-color:black;
+    border-radius: .2rem;
+}
+table tbody tr td:last-child a:first-child:hover {
+      color:white;
+    background-color:green;
+}
+
+table tbody tr td:last-child a:last-child:hover {
+      color:white;
+    background-color:red;
+}
+
+.form-control:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #A9C393;
+    outline: 0;
+    box-shadow: 0 0 20px rgba(169, 195, 147, 0.8);
+}
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #747D62;
+    border-color: #747D62;
+}
+
+.page-link:focus {
+    z-index: 3;
+    color: #747D62;
+    background-color: white;
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgba(116, 125, 98, 0.25);
+}
+
+.page-link:hover {
+    z-index: 2;
+    color: #747D62;
+    background-color: white;
+    border-color: #747D62;
+}
+
+.page-link {
+    position: relative;
+    display: block;
+    color: #747D62;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.MdivOuter{
+    height:100%;
+    align-self:flex-end;
+    width:100%;
+    margin-top:5%;
+    display:flex;
+    flex-direction:column;
+}
+
+.Mdiv1{
+    height:10%;
+    width:100%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:row;
+}
+
+
+.Mdiv1 h5 {
+    margin: 5% 1% 5% 0%;
+}
+
+.Mdiv1 .form-control{
+    width:20%;
+}
+
+.Mdiv2 {
+    height: 90%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Mdiv21 {
+    border: 1px solid #747D62;
+    height: 100%;
+    width: 30%;
+    overflow-y: auto;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #747D62 white;
+    border-radius: .5rem;
+}
+
+.Mdiv211 {
+    height: 100%;
+    width: 100%;
+    text-align:center;
+    display:flex;
+    align-items:center;
+    flex-direction:column
+}
+
+.Mdiv211 a{
+    width:100%;
+    padding:1rem;
+    cursor:pointer;
+}
+
+.Mdiv211 a:hover {
+    background-color: #B2B89E!important;
+    color:white!important;
+}
+.Mdiv211 a:nth-child(odd):hover {
+    background-color: #B2B89E!important;
+    color:white!important;
+}
+.Mdiv211 a:nth-child(odd){
+    background-color:#F5F5F5!important;
+}
+
+.Mdiv211 a:nth-child(even){
+
+
+}

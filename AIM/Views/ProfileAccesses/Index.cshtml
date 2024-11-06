@@ -1,0 +1,114 @@
+﻿@model IEnumerable<AIM.Models.ProfileAccess>
+
+@{
+    ViewData["Title"] = "Index"; Layout = null;
+}
+
+ <h4 class="title">@ViewData["ProfileName"]</h4>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Module
+            </th>
+            <th>Created By</th>
+            <th>Date Created</th>
+            <th>
+                Access
+            </th>
+           
+         
+
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Module.ModuleTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserDtCreated)
+                </td>
+                <td>
+                    <form asp-action="ChangeAccess" method="post" class="checkform" id="delete-form-@item.ProfileId">
+
+                        <input type="hidden" name="id" value="@item.ProfileId" />
+                        <input type="hidden" name="id2" value="@item.ModuleId" />
+                        <input type="checkbox" class="checkbox" name="delete" value="Y" @(item.OpenAccess == "Y" ? "checked" : "") />
+                    </form>
+                </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div class="container-fluid d-flex justify-content-end">
+    <a asp-action="Index" asp-controller="Profiles" id="Confirm" class="text-start me-2 "> <i class="fas fa-clipboard-check"></i> Confirm</a>
+
+
+</div>
+
+<script>
+
+    $(document).on('click', 'a:contains("Confirm")', function (event) {
+        event.preventDefault();
+        var href = $(this).attr('href');
+
+        // Extract the controller and action from the href
+        var parts = href.split('/'); // Split the href by '/'
+        var controller = parts[1];   // The controller is the second part
+        var action = parts[2];       // The action is the third part
+        // Using .html() method (if you also want HTML content)
+        var title = $(".title").html();
+        // Get the nearest form with the class 'checkform'
+        var form = $(this).closest('.checkform');
+
+        // Submit the form through AJAX
+        form.submit();
+
+        // Make an AJAX request to get the content for the clicked module
+        $.ajax({
+            type: 'GET',
+            url: $(this).attr('href'), // Use the href attribute as the URL
+            success: function (response) {
+                $('main').html(response);
+           
+                applyDynamicContentStyling(controller);
+            },
+            error: function (error) {
+                // Handle errors if necessary
+                console.error('Error fetching data:', error);
+            }
+        });
+    });
+
+
+
+    $(".checkbox").change(function () {
+        var checkbox = $(this);
+        var form = checkbox.closest("form");
+        var openAccessInput = form.find("input[name=openAccess]");
+
+        openAccessInput.val(checkbox.prop("checked") ? "N" : "Y");
+
+        // Submit the specific form
+        $.ajax({
+            url: form.attr("action"),
+            type: form.attr("method"),
+            data: form.serialize(),
+            success: function (res) {
+                // Handle success response if needed
+            },
+            error: function (xhr, status, error) {
+                // Handle error if needed
+            }
+        });
+    });
+ </script>

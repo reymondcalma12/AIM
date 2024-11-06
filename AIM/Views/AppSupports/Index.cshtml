@@ -1,0 +1,58 @@
+﻿@model IEnumerable<AIM.Models.AppSupport>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+           
+       
+            <th>
+                Support
+            </th>
+            <th>
+                Support Type
+            </th>
+            <th>
+                Created By
+            </th>
+            <th>
+                Created Date
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+             
+                <td>
+                    @Html.DisplayFor(modelItem => item.Support.SupportName) <!-- Include SupportCode -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SupportType.SupportTypeName) <!-- Include SupportTypeCode -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserFullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDt)
+                </td>
+
+                <td>
+                   
+                    @Html.ActionLink("Delete", "Delete", new { id = $"{item.AppCode}-{item.SupportCode}-{item.SupportTypeCode}" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

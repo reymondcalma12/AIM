@@ -1,0 +1,76 @@
+﻿@model AIM.Models.Server
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Server</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ServerName" class="control-label"></label>
+                <input asp-for="ServerName" class="form-control" />
+                <span asp-validation-for="ServerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServerIPAddress" class="control-label"></label>
+                <input asp-for="ServerIPAddress" class="form-control" />
+                <span asp-validation-for="ServerIPAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServerType" class="control-label"></label>
+                <select asp-for="ServerType" class="form-control" asp-items="ViewBag.ServerType"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServerHostName" class="control-label"></label>
+                <input asp-for="ServerHostName" class="form-control" />
+                <span asp-validation-for="ServerHostName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServerHostIPAddress" class="control-label"></label>
+                <input asp-for="ServerHostIPAddress" class="form-control" />
+                <span asp-validation-for="ServerHostIPAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServerStatus" class="control-label"></label>
+                <select asp-for="ServerStatus" class="form-control" asp-items="ViewBag.ServerStatus"></select>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="ServerCreatedBy" class="control-label"></label>
+                <select asp-for="ServerCreatedBy" class="form-control" asp-items="ViewBag.ServerCreatedBy"></select>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="ServerCreatedDt" class="control-label"></label>
+                <input asp-for="ServerCreatedDt" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+                <span asp-validation-for="ServerCreatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="ServerUpdatedBy" class="control-label"></label>
+                <select asp-for="ServerUpdatedBy" class="form-control" asp-items="ViewBag.ServerUpdatedBy"></select>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="ServerUpdatedDt" class="control-label"></label>
+                <input asp-for="ServerUpdatedDt" class="form-control" />
+                <span asp-validation-for="ServerUpdatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

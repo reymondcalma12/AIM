@@ -1,0 +1,59 @@
+﻿@model AIM.Models.Support
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Support</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SupportCode" />
+            <div class="form-group">
+                <label asp-for="SupportName" class="control-label"></label>
+                <input asp-for="SupportName" class="form-control" />
+                <span asp-validation-for="SupportName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SupportStatus" class="control-label"></label>
+                <select asp-for="SupportStatus" class="form-control" asp-items="ViewBag.SupportStatus"></select>
+                <span asp-validation-for="SupportStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="SupportCreatedBy" class="control-label"></label>
+                <select asp-for="SupportCreatedBy" class="form-control" asp-items="ViewBag.SupportCreatedBy"></select>
+                <span asp-validation-for="SupportCreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="SupportCreatedDt" class="control-label"></label>
+                <input asp-for="SupportCreatedDt" class="form-control" />
+                <span asp-validation-for="SupportCreatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="SupportUpdatedBy" class="control-label"></label>
+                <select asp-for="SupportUpdatedBy" class="form-control" asp-items="ViewBag.SupportUpdatedBy"></select>
+                <span asp-validation-for="SupportUpdatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="SupportUpdatedDt" class="control-label"></label>
+                <input asp-for="SupportUpdatedDt" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+                <span asp-validation-for="SupportUpdatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

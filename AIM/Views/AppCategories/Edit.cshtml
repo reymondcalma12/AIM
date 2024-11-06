@@ -1,0 +1,59 @@
+﻿@model AIM.Models.AppCategory
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>AppCategory</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CatCode" />
+            <div class="form-group">
+                <label asp-for="CatName" class="control-label"></label>
+                <input asp-for="CatName" class="form-control" />
+                <span asp-validation-for="CatName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CatStatus" class="control-label"></label>
+                <select asp-for="CatStatus" class="form-control" asp-items="ViewBag.CatStatus"></select>
+                <span asp-validation-for="CatStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="CatCreatedBy" class="control-label"></label>
+                <select asp-for="CatCreatedBy" class="form-control" asp-items="ViewBag.CatCreatedBy"></select>
+                <span asp-validation-for="CatCreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="CatCreatedDt" class="control-label"></label>
+                <input asp-for="CatCreatedDt" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+                <span asp-validation-for="CatCreatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="CatUpdatedBy" class="control-label"></label>
+                <select asp-for="CatUpdatedBy" class="form-control" asp-items="ViewBag.CatUpdatedBy"></select>
+                <span asp-validation-for="CatUpdatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="CatUpdatedDt" class="control-label"></label>
+                <input asp-for="CatUpdatedDt" class="form-control" />
+                <span asp-validation-for="CatUpdatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<AIM.Models.BusinessImpact>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Status
+            </th>
+            <th>Created By</th>
+            <th>Created Date</th>
+
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.ImpactName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.StatusName)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImpactCreatedBy)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImpactCreatedDt)
+
+                </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ImpactCode">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ImpactCode">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ImpactCode">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

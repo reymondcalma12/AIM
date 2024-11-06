@@ -1,0 +1,40 @@
+﻿@model AIM.Models.AppDependency
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>AppDependency</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="RPortOslaCode" />
+            <input type="hidden" asp-for="AppCode" />
+            <div class="form-group" hidden>
+                <label asp-for="DependencyCreatedBy" class="control-label"></label>
+                <select asp-for="DependencyCreatedBy" class="form-control" asp-items="ViewBag.DependencyCreatedBy"></select>
+                <span asp-validation-for="DependencyCreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="DependencyCreatedDt" class="control-label"></label>
+                <input asp-for="DependencyCreatedDt" class="form-control" />
+                <span asp-validation-for="DependencyCreatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

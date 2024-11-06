@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.4.0",
+    "datatables.net-bs5": "^1.13.5",
+    "datatables.net-dt": "^1.13.5",
+    "jquery": "^3.7.0",
+    "jquery-ui": "^1.13.2",
+    "ui": "^0.2.4"
+  }
+}

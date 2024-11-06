@@ -1,0 +1,75 @@
+﻿@model AIM.Models.User
+
+@{
+    ViewData["Title"] = "Edit"; Layout = null;
+}
+
+<h1>Edit</h1>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserCode" />
+            <div class="form-group" hidden>
+                <label asp-for="UserPass" class="control-label"></label>
+                <input asp-for="UserPass" class="form-control" />
+                <span asp-validation-for="UserPass" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserADLogin" class="control-label">Active Directory Login</label>
+                <input asp-for="UserADLogin" class="form-control" />
+                <span asp-validation-for="UserADLogin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserFullName" class="control-label">Full Name</label>
+                <input asp-for="UserFullName" class="form-control" />
+                <span asp-validation-for="UserFullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserProfile" class="control-label">Profile</label>
+                <select asp-for="UserProfile" class="form-control" asp-items="ViewBag.UserProfile"></select>
+                <span asp-validation-for="UserProfile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserStatus" class="control-label">Status</label>
+                <select asp-for="UserStatus" class="form-control" asp-items="ViewBag.UserStatus"></select>
+                <span asp-validation-for="UserStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="UserCreated" class="control-label"></label>
+                <input asp-for="UserCreated" class="form-control" />
+                <span asp-validation-for="UserCreated" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="UserDtCreated" class="control-label"></label>
+                <input asp-for="UserDtCreated" class="form-control" />
+                <span asp-validation-for="UserDtCreated" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="UserUpdated" class="control-label"></label>
+                <input asp-for="UserUpdated" class="form-control" />
+                <span asp-validation-for="UserUpdated" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="UserDtUpdated" class="control-label"></label>
+                <input asp-for="UserDtUpdated" class="form-control" />
+                <span asp-validation-for="UserDtUpdated" class="text-danger"></span>
+            </div>
+            <div class="form-group d-flex align-items-baseline gap-3">
+                <input type="submit" value="Save" class="btn btn-primary" />
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

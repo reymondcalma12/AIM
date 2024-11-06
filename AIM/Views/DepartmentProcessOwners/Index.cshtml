@@ -1,0 +1,46 @@
+﻿@model IEnumerable<AIM.Models.DepartmentProcessOwner>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+        
+            <th>
+                RPortOsla
+            </th>
+            <th>
+                Department
+            </th>
+   
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => item.RPortOsla.RPortOslaCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department.DeptName)
+                </td>
+           
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = $"{item.RPortOslaCode}-{item.DeptCode}" }) |
+                    @Html.ActionLink("Details", "Details", new { id = $"{item.RPortOslaCode}-{item.DeptCode}" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = $"{item.RPortOslaCode}-{item.DeptCode}" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

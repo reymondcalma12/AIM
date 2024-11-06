@@ -1,0 +1,74 @@
+﻿@model IEnumerable<AIM.Models.RPortOsla>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>RPO</th>
+            <th>
+                Current RPO
+            </th>
+            <th>
+                Proposed RPO
+            </th>
+            <th>
+                RTO            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Application)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                SLA Level
+            </th>
+       
+            
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RPortOslaCode)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppCurrentRPO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppProposedRPO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppRTO)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Application.AppName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location.LocationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SLALevel.SLALevelName)
+            </td>
+       
+       
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RPortOslaCode">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RPortOslaCode">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RPortOslaCode">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

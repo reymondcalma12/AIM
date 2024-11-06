@@ -1,0 +1,48 @@
+﻿    @model IEnumerable<AIM.Models.AppSystemAffected>
+
+    @{
+        ViewData["Title"] = "Index";
+    }
+
+    <h1>Index</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+       
+                <th>
+                    Systems Affected
+                </th>
+                <th>
+                    Created By
+                </th>
+            <th>
+                    Date Created
+            </th>
+            <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => item.System.AppName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedByUser.UserFullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDt)
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { appCode = item.AppCode, systemCode = item.SystemCode })
+
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>

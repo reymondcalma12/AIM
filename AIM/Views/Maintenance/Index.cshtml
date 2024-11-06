@@ -1,0 +1,194 @@
+﻿@{
+    ViewData["Title"] = "Index";
+
+}
+<h4>MAINTENANCE</h4>
+
+<div class="MdivOuter">
+    <div class="Mdiv1">
+        <h5>Search:</h5><input type="text" class="form form-control" id="maintenanceSearch" autocomplete="off"/> 
+    </div>
+    <div class="Mdiv2">
+        <div class="Mdiv21">
+            <div class="Mdiv211">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-ui/dist/jquery-ui.min.js"></script>
+<script>
+
+
+
+    $(document).ready(function () {
+
+        var excludedModuleTitles = [
+            "APPCONTACTS",
+            "APPDEPTPROCOWNERS",
+            "APPIPADDRESSES",
+            "APPFUNCTIONALAREAOWNERS",
+            "APPMODULEDEPENDENCIES",
+            "APPSUPPORTS",
+            "BROWSERCOMPATIBILITIES",
+            "APPAREAAFFECTEDS",
+            "APPBUSINESSIMPACTS",
+            "APPDEPENDENCIES",
+            "APPSYSTEMAFFECTEDS",
+            "DEPARTMENTPROCESSOWNERS"
+        ];
+
+        var titleModifications = {
+            "BUSINESSIMPACTS": "BUSINESS IMPACTS",
+            "SLALEVELS": "SLA LEVELS",
+            "APPLOCATIONS": "APPLICATION LOCATIONS",
+            "LEVEL3OWNER": "LEVEL 3 OWNER",
+            "LEVEL3": "LEVEL 3",
+            "AUTHMETHODS": "AUTHENTICATION METHODS",
+            "CRITICALLEVELS": "CRITICAL LEVELS",
+            "FUNCTIONALAREAS": "FUNCTIONAL AREAS",
+            "LEVEL2": "LEVEL 2",
+            "OPERATINGSYSTEMS": "OPERATING SYSTEMS",
+            "PRINTSPOOLERS": "PRINT SPOOLERS",
+            "SYSTEMCLASSES": "SYSTEM CLASSES",
+            "SUPPORTTYPES": "SUPPORT TYPES",
+            "APPCATEGORIES": "APPLICATION CATEGORIES"
+        };
+
+        var searchResult = $("#maintenanceSearch").val();
+
+        if (searchResult.length == 0) {
+
+            $.ajax({
+                type: 'GET',
+                url: "/Maintenance/SearchResult",
+                data: { searchModules: searchResult },
+                dataType: "json",
+                success: function (result) {
+
+                    $(".Mdiv211").empty();
+
+                    $.each(result, function (index, item) {
+                    
+                        if (!excludedModuleTitles.includes(item.moduleTitle)) {
+
+                            var moduleTitle = item.moduleTitle; // Get the module title
+                            var displayTitle = moduleTitle;
+
+                            if (moduleTitle in titleModifications) {
+                                displayTitle = titleModifications[moduleTitle];
+                            }
+
+                            var url = `/${item.moduleTitle}/Index`;
+
+                            var html = `
+                                    <a href="${url}"
+                                        data-controller="${item.moduleTitle}"
+                                        data-action="Index" class="module-link">
+
+                                        ${displayTitle}    
+                                        
+                                    </a>
+                            `;
+
+
+                            $(".Mdiv211").append(html);
+
+                        }
+                    });
+
+                },
+                error: function (req, status, error) {
+                    console.log(status);
+                }
+            });
+        }
+
+
+        $("#maintenanceSearch").on("input", function () {
+
+            var searchResult = $("#maintenanceSearch").val();
+
+            if (searchResult.length > 0) {
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/Maintenance/SearchResult",
+                    data: { searchModules: searchResult },
+                    dataType: "json",
+                    success: function (result) {
+
+                        $(".Mdiv211").empty();
+
+                        $.each(result, function (index, item) {
+
+                            var url = `/${item.moduleTitle}/Index`;
+
+                            var html = `
+                                        <a href="${url}"
+                                            data-controller="${item.moduleTitle}"
+                                            data-action="Index" class="module-link">
+
+                                            ${item.moduleTitle}
+
+                                        </a>
+                                `;
+
+
+                            $(".Mdiv211").append(html);
+                        });
+
+                    },
+                    error: function (req, status, error) {
+                        console.log(status);
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                    type: 'GET',
+                    url: "/Maintenance/SearchResult",
+                    data: { searchModules: searchResult },
+                    dataType: "json",
+                    success: function (result) {
+
+                        $(".Mdiv211").empty();
+
+                        $.each(result, function (index, item) {
+
+                            var url = `/${item.moduleTitle}/Index`;
+
+                            var html = `
+                                            <a href="${url}"
+                                                data-controller="${item.moduleTitle}"
+                                                data-action="Index" class="module-link">
+                                                
+                                                ${item.moduleTitle}
+
+                                            </a>
+                                    `;
+
+
+                            $(".Mdiv211").append(html);
+                        });
+
+                    },
+                    error: function (req, status, error) {
+                        console.log(status);
+                    }
+                });
+            }
+
+        });
+
+
+
+
+    });
+
+
+
+
+
+</script>

@@ -1,0 +1,52 @@
+﻿@model AIM.Models.PrintSpooler
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>PrintSpooler</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SpoolerCode" />
+            <div class="form-group">
+                <label asp-for="SpoolerName" class="control-label"></label>
+                <input asp-for="SpoolerName" class="form-control" />
+                <span asp-validation-for="SpoolerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SpoolerStatus" class="control-label"></label>
+                <select asp-for="SpoolerStatus" class="form-control" asp-items="ViewBag.SpoolerStatus"></select>
+                <span asp-validation-for="SpoolerStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="SpoolerCreatedBy" class="control-label"></label>
+                <select asp-for="SpoolerCreatedBy" class="form-control" asp-items="ViewBag.SpoolerCreatedBy"></select>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="SpoolerCreatedDt" class="control-label"></label>
+                <input asp-for="SpoolerCreatedDt" class="form-control"  />
+                <span asp-validation-for="SpoolerCreatedDt" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="SpoolerUpdatedBy" class="control-label"></label>
+                <select asp-for="SpoolerUpdatedBy" class="form-control" asp-items="ViewBag.SpoolerUpdatedBy"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<AIM.Models.AppLocation>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Name
+            </th>
+          
+    
+            <th>
+              Status
+            </th>
+            <th>
+                Date Created
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocationName)
+            </td>
+           
+        
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.StatusName)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LocationCreatedDt)
+                </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.LocationCode">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.LocationCode">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.LocationCode">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

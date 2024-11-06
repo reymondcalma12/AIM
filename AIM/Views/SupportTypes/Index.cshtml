@@ -1,0 +1,65 @@
+﻿@model IEnumerable<AIM.Models.SupportType>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Name
+            </th>
+            <th>
+                Created Date
+            </th>
+            <th>
+                Updated Date
+            </th>
+            <th>
+              Status
+            </th>
+            <th>
+               Created By
+            </th>
+            <th>
+          Updated By
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportTypeCreatedDt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportTypeUpdatedDt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.StatusName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy.UserFullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedBy.UserFullName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SupportTypeCode">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SupportTypeCode">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SupportTypeCode">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

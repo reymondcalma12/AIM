@@ -1,0 +1,46 @@
+﻿@model IEnumerable<AIM.Models.AppBusinessImpact>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+          
+            <th>
+                RPortOsla
+            </th>
+            <th>
+                BusinessImpact
+            </th>
+          
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+             
+                <td>
+                    @Html.DisplayFor(modelItem => item.RPortOsla.RPortOslaCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BusinessImpact.ImpactName)
+                </td>
+                
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = $"{item.RPortOsla.RPortOslaCode}-{item.BusinessImpact.ImpactCode}" }) |
+                    @Html.ActionLink("Details", "Details", new { id = $"{item.RPortOsla.RPortOslaCode}-{item.BusinessImpact.ImpactCode}" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = $"{item.RPortOsla.RPortOslaCode}-{item.BusinessImpact.ImpactCode}" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
